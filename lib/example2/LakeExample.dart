@@ -31,12 +31,12 @@ class LayoutApp extends StatelessWidget {
         Situated 1,578 meters above sea level, 
         it is one of the larger Alpine Lakes. 
         A gondola ride from Kandersteg, followed
-         by a half-hour walk through pastures and
-         pine forest, leads you to the lake, 
-         which warms to 20 degrees Celsius in
-          the summer. Activities enjoyed here 
-          include rowing, and riding the summer
-           toboggan run. 
+        by a half-hour walk through pastures and
+        pine forest, leads you to the lake, 
+        which warms to 20 degrees Celsius in
+        the summer. Activities enjoyed here 
+        include rowing, and riding the summer
+        toboggan run. 
         ''',
         softWrap: true,
       ),
@@ -77,11 +77,7 @@ class LayoutApp extends StatelessWidget {
               ],
             ),
           ),
-          new Icon(
-            Icons.star,
-            color: Colors.red[500],
-          ),
-          new Text('41')
+          FavoriteWidget()
         ],
       ),
     );
@@ -105,6 +101,52 @@ class LayoutApp extends StatelessWidget {
 
     return MaterialApp(
       home: createHome(),
+    );
+  }
+}
+
+class FavoriteWidget extends StatefulWidget {
+  @override
+  State createState() {
+    return _FavoriteWidgetState();
+  }
+}
+
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+  bool _isFavorited = true;
+  int _favoriteCount = 41;
+
+  void _toggleFavorite() {
+    setState(() {
+      if (_isFavorited) {
+        _isFavorited = false;
+        _favoriteCount -= 1;
+      } else {
+        _favoriteCount += 1;
+        _isFavorited = true;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          padding: new EdgeInsets.all(0.0),
+          child: IconButton(
+              icon: _isFavorited ? Icon(Icons.star) : Icon(Icons.star_border),
+              color: Colors.red[500],
+              onPressed: _toggleFavorite),
+        ),
+        SizedBox(
+          width: 18.0,
+          child: Container(
+            child: new Text('$_favoriteCount'),
+          ),
+        ),
+      ],
     );
   }
 }
