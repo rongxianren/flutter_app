@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/stateful_widget/ExampleEnter.dart';
+import 'channelExample/MethodChannel.dart';
 import 'example1/FirstSimpleApp.dart';
 import 'example2/LakeExample.dart';
 
@@ -28,6 +29,7 @@ class EnterWidget extends StatelessWidget {
     widgetsMap.putIfAbsent('FirstSimpleApp', () => FirstSimpleApp());
     widgetsMap.putIfAbsent('LayoutSimpleApp', () => LayoutApp());
     widgetsMap.putIfAbsent('StateManagerment', () => StatefulWidgetLayout());
+    widgetsMap['MethodChannel'] = ChannelWidget();
 
     return Scaffold(
       appBar: AppBar(
