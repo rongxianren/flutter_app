@@ -8,8 +8,7 @@ import 'example2/LakeExample.dart';
 
 void main() => runApp(EnterWidget());
 
-final _biggerFont =
-    const TextStyle(fontSize: 18.0, backgroundColor: Colors.lightGreen);
+final _biggerFont = const TextStyle(fontSize: 18.0);
 
 class EnterWidget extends StatelessWidget {
   Map<String, Widget> widgetsMap = HashMap();
@@ -45,19 +44,19 @@ class EnterWidget extends StatelessWidget {
   }
 
   Widget getItem(Widget item, BuildContext context, String itemContent) {
-    return GestureDetector(
-        child: Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Center(
-            child: Text(
-              itemContent,
-              style: _biggerFont,
-            ),
-          ),
-        ),
-        onTap: () {
+    return Container(
+      constraints: BoxConstraints.expand(height: 50.0),
+      child: RaisedButton(
+        onPressed: () {
           navigation(item, context);
-        });
+        },
+        child: Text(
+          itemContent,
+          style: _biggerFont,
+        ),
+      ),
+      margin: EdgeInsets.all(10.0),
+    );
   }
 
   navigation(Widget widget, BuildContext buildContext) {
