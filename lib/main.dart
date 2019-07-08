@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/stateful_widget/ExampleEnter.dart';
 import 'package:flutter_app/widgetExample/WidgetExample.dart';
 import 'package:flutter_app/widget_listviewExample/ListViewLoadMore.dart';
+import 'animationExample/AnimationTest.dart';
 import 'channelExample/MethodChannel.dart';
 import 'example1/FirstSimpleApp.dart';
 import 'example2/LakeExample.dart';
@@ -33,6 +34,7 @@ class EnterWidget extends StatelessWidget {
     widgetsMap['MethodChannel'] = ChannelWidget();
     widgetsMap['WidgetExample'] = WidgetExample();
     widgetsMap['ListViewLoadMore'] = ListViewWidget();
+    widgetsMap['PainterContainer'] = PainterContainer();
 
     return Scaffold(
       appBar: AppBar(
