@@ -15,7 +15,8 @@ class WidgetExample extends StatelessWidget {
           getFlexible(),
           getDivider(),
           getStack(),
-          getDivider()
+          getDivider(),
+          getCard(),
         ],
       ),
     ));
@@ -132,5 +133,30 @@ class WidgetExample extends StatelessWidget {
                 child: Text('Positioned'),
               )),
         ]));
+  }
+
+  TextStyle _itemTextStyle =
+      new TextStyle(fontWeight: FontWeight.w500, fontSize: 14.0);
+
+  Widget getCard() {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        children: <Widget>[
+          Image.asset('images/lake.jpg'),
+          ListTile(
+            title: Text(
+              'title',
+              style: _itemTextStyle,
+            ),
+            subtitle: Text('A'),
+            leading: Icon(
+              Icons.theaters,
+              color: Colors.blue,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
