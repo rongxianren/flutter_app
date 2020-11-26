@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,8 +17,7 @@ class _MyHomePageState extends State<ChannelWidget> {
   Future<Null> _getBatteryLevel() async {
     String batteryLevel;
     try {
-     int result = await platform.invokeMethod('getBatteryLevel');
-      batteryLevel = 'Battery level at $result';
+      batteryLevel = 'Battery level at ${ await result}';
     } on PlatformException catch (e) {
       batteryLevel = "failed to get battery level: '${e.message}'.";
       print(e);
@@ -25,7 +26,12 @@ class _MyHomePageState extends State<ChannelWidget> {
       _batteryLevel = batteryLevel;
     });
   }
-
+  Future<int> result;
+  @override
+  void initState() {
+    super.initState();
+    result =  Future(getBatteryLevel);
+  }
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -42,5 +48,9 @@ class _MyHomePageState extends State<ChannelWidget> {
         ),
       ),
     );
+  }
+
+  Future<int> getBatteryLevel() async{
+    return platform.invokeMethod('getBatteryLevel');
   }
 }
