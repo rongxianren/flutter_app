@@ -18,9 +18,9 @@ class WidgetReuseState extends State<WidgetReuse> {
   @override
   void initState() {
     super.initState();
-    colorBlockItems.add(ColorBlock(Colors.red, "色块11111", key: UniqueKey()));
-    colorBlockItems.add(ColorBlock(Colors.amber, "色块22222",key: UniqueKey()));
-    colorBlockItems.add(ColorBlock(Colors.blue, "色块33333",key: UniqueKey()));
+    colorBlockItems.add(ColorBlock("色块11111"));
+    colorBlockItems.add(ColorBlock("色块22222"));
+    colorBlockItems.add(ColorBlock("色块33333"));
   }
 
   @override
@@ -30,6 +30,8 @@ class WidgetReuseState extends State<WidgetReuse> {
         title: Text("Widget 复用测试"),
       ),
       body: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: colorBlockItems,
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -64,10 +66,10 @@ class WidgetReuseState extends State<WidgetReuse> {
 // }
 
 class ColorBlock extends StatefulWidget {
-  final Color color;
+  // final Color _color = Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255), Random().nextInt(255));
   final String title;
 
-  ColorBlock(this.color, this.title, {Key key}) : super(key: key);
+  ColorBlock(this.title, {Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -77,12 +79,10 @@ class ColorBlock extends StatefulWidget {
 
 class ColorBlockState extends State<ColorBlock> {
   Random random = Random();
-  Color _color;
-
+  final Color _color = Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255), Random().nextInt(255));
   @override
   void initState() {
     super.initState();
-    _color = Color.fromARGB(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
   }
 
   @override
