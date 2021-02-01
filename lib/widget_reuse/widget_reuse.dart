@@ -21,6 +21,9 @@ class WidgetReuseState extends State<WidgetReuse> {
     colorBlockItems.add(ColorBlock("色块11111"));
     colorBlockItems.add(ColorBlock("色块22222"));
     colorBlockItems.add(ColorBlock("色块33333"));
+    colorBlockItems.add(ColorBlock("色块11111", key: UniqueKey()));
+    colorBlockItems.add(ColorBlock("色块22222",key: UniqueKey()));
+    colorBlockItems.add(ColorBlock("色块33333",key: UniqueKey()));
   }
 
   @override
@@ -29,13 +32,12 @@ class WidgetReuseState extends State<WidgetReuse> {
       appBar: AppBar(
         title: Text("Widget 复用测试"),
       ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: colorBlockItems,
-      ),
+      body: ListView.separated(
+          itemBuilder: (context, index) => colorBlockItems[index],
+          separatorBuilder: (context, index) => _getDivider(),
+          itemCount: colorBlockItems.length),
       floatingActionButton: FloatingActionButton.extended(
-        label: Icon(Icons.add),
+        label: Icon(Icons.delete),
         onPressed: () {
           if (colorBlockItems.isNotEmpty) {
             colorBlockItems.removeAt(0);
@@ -45,28 +47,18 @@ class WidgetReuseState extends State<WidgetReuse> {
       ),
     );
   }
+
+  Divider _getDivider() {
+    return Divider(
+      color: Color.fromARGB(255, 242, 243, 245),
+      thickness: 1,
+      height: 1,
+    );
+  }
 }
 
-// class ColorBlock extends StatelessWidget {
-//   final Color color;
-//   final String title;
-//
-//   ColorBlock(this.color, this.title);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: 60,
-//       height: 60,
-//       alignment: Alignment.center,
-//       decoration: BoxDecoration(color: color),
-//       child: Text(title),
-//     );
-//   }
-// }
-
 class ColorBlock extends StatefulWidget {
-  // final Color _color = Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255), Random().nextInt(255));
+  final Color _color = Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255), Random().nextInt(255));
   final String title;
 
   ColorBlock(this.title, {Key key}) : super(key: key);
@@ -78,8 +70,8 @@ class ColorBlock extends StatefulWidget {
 }
 
 class ColorBlockState extends State<ColorBlock> {
-  Random random = Random();
   final Color _color = Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255), Random().nextInt(255));
+
   @override
   void initState() {
     super.initState();
@@ -93,6 +85,33 @@ class ColorBlockState extends State<ColorBlock> {
       alignment: Alignment.center,
       decoration: BoxDecoration(color: _color),
       child: Text(widget.title),
+    );
+
+    // return Stack(
+    //   children: [BackGround(), Center(child: Text(widget.title))],
+    // );
+  }
+}
+
+class BackGround extends StatefulWidget {
+  BackGround({Key key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return BackGroundState();
+  }
+}
+
+class BackGroundState extends State<BackGround> {
+  final Color _color = Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255), Random().nextInt(255));
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: UniqueKey(),
+      height: 60,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(color: _color),
     );
   }
 }
