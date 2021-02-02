@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/gesture/gesture.dart';
 import 'package:flutter_app/stateful_widget/ExampleEnter.dart';
 import 'package:flutter_app/widgetExample/WidgetExample.dart';
 import 'package:flutter_app/widget_listviewExample/ListViewLoadMore.dart';
@@ -24,7 +25,8 @@ class EnterWidget extends StatelessWidget {
     '/WidgetExample',
     '/ListViewLoadMore',
     '/PainterContainer',
-    '/WidgetReUse'
+    '/WidgetReUse',
+    '/GestureWidget'
   ];
 
   @override
@@ -74,6 +76,7 @@ class EnterWidget extends StatelessWidget {
       '/ListViewLoadMore': getPageRoute(name, args, ListViewWidget()),
       '/PainterContainer': getPageRoute(name, args, PainterContainer()),
       '/WidgetReUse': getPageRoute(name, args, WidgetReuse()),
+      '/GestureWidget': getPageRoute(name, args, GestureWidget()),
     };
     return routeMap;
   }
