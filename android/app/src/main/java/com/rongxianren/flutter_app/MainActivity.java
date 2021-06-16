@@ -7,7 +7,10 @@ import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 
-import io.flutter.app.FlutterActivity;
+import androidx.annotation.NonNull;
+
+import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
@@ -16,27 +19,36 @@ public class MainActivity extends FlutterActivity {
     private static final String CHANNEL = "com.rongxianren.flutter_app/battery";
     private static final String METHOD = "getBatteryLevel";
 
+
+    @Override
+    public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+        flutterEngine
+                .getPlatformViewsController()
+                .getRegistry()
+                .registerViewFactory("hybrid-view-type", new NativeViewFactory(null, null));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GeneratedPluginRegistrant.registerWith(this);
-
-        new MethodChannel(getFlutterView(), CHANNEL)
-                .setMethodCallHandler(new MethodChannel.MethodCallHandler() {
-                    @Override
-                    public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
-                        if (methodCall.method.equals(METHOD)) {
-                            int batteryLevel = getBatteryLevel();
-                            if (batteryLevel != -1) {
-                                result.success(batteryLevel);
-                            } else {
-                                result.error("UNAVAILABLE", "Battery level not available.", null);
-                            }
-                        } else {
-                            result.notImplemented();
-                        }
-                    }
-                });
+//        GeneratedPluginRegistrant.registerWith(this);
+//
+//        new MethodChannel(getFlutterView(), CHANNEL)
+//                .setMethodCallHandler(new MethodChannel.MethodCallHandler() {
+//                    @Override
+//                    public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
+//                        if (methodCall.method.equals(METHOD)) {
+//                            int batteryLevel = getBatteryLevel();
+//                            if (batteryLevel != -1) {
+//                                result.success(batteryLevel);
+//                            } else {
+//                                result.error("UNAVAILABLE", "Battery level not available.", null);
+//                            }
+//                        } else {
+//                            result.notImplemented();
+//                        }
+//                    }
+//                });
     }
 
     private int getBatteryLevel() {

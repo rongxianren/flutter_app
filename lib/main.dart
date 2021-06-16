@@ -18,7 +18,7 @@ final _biggerFont = const TextStyle(fontSize: 18.0);
 
 class EnterWidget extends StatelessWidget {
   final List<String> routes = [
-    '/FirstSimpleApp',
+    '/FlutterHybridComposition',
     '/LayoutSimpleApp',
     '/StateManagerment',
     '/MethodChannel',
@@ -68,7 +68,7 @@ class EnterWidget extends StatelessWidget {
 
   Map<String, Route> _generateRoutes(String name, args) {
     Map<String, Route> routeMap = {
-      '/FirstSimpleApp': getPageRoute(name, args, FirstSimpleApp()),
+      '/FlutterHybridComposition': getPageRoute(name, args, FirstSimpleApp()),
       '/LayoutSimpleApp': getPageRoute(name, args, LayoutApp()),
       '/StateManagerment': getPageRoute(name, args, StatefulWidgetLayout()),
       '/MethodChannel': getPageRoute(name, args, ChannelWidget()),

@@ -1,6 +1,11 @@
 import 'package:english_words/english_words.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
+import 'platform_view.dart';
 
 class RandomWords extends StatefulWidget {
   @override
@@ -21,11 +26,10 @@ class RandomWordsState extends State<RandomWords> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Startup Name generator'),
-        actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.list), onPressed: _pushSaved)
-        ],
+        actions: <Widget>[new IconButton(icon: new Icon(Icons.list), onPressed: _pushSaved)],
       ),
       body: _buildSuggestions(),
+      // body: PlatformViewWidget(),
     );
   }
 
@@ -34,7 +38,7 @@ class RandomWordsState extends State<RandomWords> {
       new MaterialPageRoute(
         builder: (context) {
           final tiles = _saved.map(
-                (pair) {
+            (pair) {
               return new ListTile(
                 title: new Text(
                   pair.asPascalCase,
@@ -71,6 +75,37 @@ class RandomWordsState extends State<RandomWords> {
         if (index >= _suggestions.length) {
           _suggestions.addAll(generateWordPairs().take(10));
         }
+        if (index == 3) {
+          return Container(
+            height: 200,
+            width: 300,
+            child: PlatformViewWidget(),
+          );
+        }
+
+        if (index == 6) {
+          return Container(
+            height: 200,
+            width: 300,
+            child: PlatformViewWidget(),
+          );
+        }
+
+        if (index == 9) {
+          return Container(
+            height: 200,
+            width: 300,
+            child: PlatformViewWidget(),
+          );
+        }
+
+        if (index == 12) {
+          return Container(
+            height: 200,
+            width: 300,
+            child: PlatformViewWidget(),
+          );
+        }
         return _buildRow(_suggestions[index]);
       },
     );
@@ -84,8 +119,8 @@ class RandomWordsState extends State<RandomWords> {
         pair.asPascalCase,
         style: _biggerFont,
       ),
-      trailing: new Icon(alreadySaved ? Icons.favorite : Icons.favorite_border,
-          color: alreadySaved ? Colors.red : null),
+      trailing:
+          new Icon(alreadySaved ? Icons.favorite : Icons.favorite_border, color: alreadySaved ? Colors.red : null),
       onTap: () {
         setState(() {
           if (alreadySaved) {
@@ -94,6 +129,35 @@ class RandomWordsState extends State<RandomWords> {
             _saved.add(pair);
           }
         });
+      },
+    );
+  }
+
+  Widget _buildPlatformViewLink() {
+    final String viewType = 'hybrid-view-type';
+    // Pass parameters to the platform side.
+    final Map<String, dynamic> creationParams = <String, dynamic>{};
+
+    // return Text("data");
+    return PlatformViewLink(
+      viewType: viewType,
+      surfaceFactory: (BuildContext context, PlatformViewController controller) {
+        return AndroidViewSurface(
+          controller: controller,
+          gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
+          hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+        );
+      },
+      onCreatePlatformView: (PlatformViewCreationParams params) {
+        return PlatformViewsService.initSurfaceAndroidView(
+          id: params.id,
+          viewType: viewType,
+          layoutDirection: TextDirection.ltr,
+          creationParams: creationParams,
+          creationParamsCodec: StandardMessageCodec(),
+        )
+          ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+          ..create();
       },
     );
   }
